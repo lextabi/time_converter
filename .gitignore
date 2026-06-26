@@ -1,0 +1,32 @@
+# Visual Studio and build artifacts
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build output
+bin/
+obj/
+
+# Rider / ReSharper
+.idea/
+*.DotSettings.user
+
+# Visual Studio Code
+.vscode/
+
+# Logs
+*.log
+
+# Resharper caches
+_ReSharper*/
+
+# GitHub Copilot indexes/cache
+.CopilotIndices/
+
+# generated files
+*.db
+*.pdb
+*.exe
+*.cache
