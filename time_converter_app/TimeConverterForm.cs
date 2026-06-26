@@ -7,6 +7,9 @@ namespace time_converter_app
 {
     public partial class TimeConverterForm : Form
     {
+        private List<TimezoneDisplayItem> _allTargetTimezones;
+        private bool _isUpdatingTargetCombo;
+
         public TimeConverterForm()
         {
             InitializeComponent();
@@ -66,10 +69,14 @@ namespace time_converter_app
             comboBoxSourceTimezone.ValueMember = "Timezone";
             comboBoxSourceTimezone.DropDownWidth = 420;
 
-            comboBoxTargetTimezone.DataSource = new List<TimezoneDisplayItem>(items);
+            comboBoxTargetTimezone.DataSource = null;
             comboBoxTargetTimezone.DisplayMember = "DisplayText";
             comboBoxTargetTimezone.ValueMember = "Timezone";
+            comboBoxTargetTimezone.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxTargetTimezone.DropDownWidth = 420;
+            comboBoxTargetTimezone.Items.Clear();
+            comboBoxTargetTimezone.Items.AddRange(items.ToArray());
+            _allTargetTimezones = items;
 
             var defaultSource = items.FirstOrDefault(item => item.Timezone.Id.Contains("Manila") || item.Timezone.DisplayName.Contains("Philippine") || item.Timezone.Id.Contains("Singapore"));
             if (defaultSource != null)
@@ -93,9 +100,25 @@ namespace time_converter_app
         /// </summary>
         private void buttonConvertTime_Click(object sender, EventArgs e)
         {
-            if (!(comboBoxSourceTimezone.SelectedItem is TimezoneDisplayItem sourceItem) || !(comboBoxTargetTimezone.SelectedItem is TimezoneDisplayItem targetItem))
+            if (!(comboBoxSourceTimezone.SelectedItem is TimezoneDisplayItem sourceItem))
             {
-                MessageBox.Show("Please select both source and target time zones.", "Missing time zone", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Please select your source timezone.", "Missing time zone", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            TimezoneDisplayItem targetItem = comboBoxTargetTimezone.SelectedItem as TimezoneDisplayItem;
+            if (targetItem == null)
+            {
+                targetItem = FindTargetItemByText(comboBoxTargetTimezone.Text);
+                if (targetItem != null)
+                {
+                    comboBoxTargetTimezone.SelectedItem = targetItem;
+                }
+            }
+
+            if (targetItem == null)
+            {
+                MessageBox.Show("Please enter or select a valid target timezone.", "Missing target time zone", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -128,7 +151,70 @@ namespace time_converter_app
                 targetDateTime = RemoveDaylightSaving(targetDateTime, targetZone);
             }
 
-            labelConversionResult.Text = $"{sourceDateTime:yyyy-MM-dd} {sourceDateTime:HH:mm} in {sourceZone.StandardName}\n→ {targetDateTime:yyyy-MM-dd} {targetDateTime:HH:mm} in {targetZone.StandardName}";
+            labelConversionResult.Text = $"{sourceDateTime:yyyy-MM-dd} {sourceDateTime:hh:mm tt} in {sourceZone.StandardName}\n→ {targetDateTime:yyyy-MM-dd} {targetDateTime:hh:mm tt} in {targetZone.StandardName}";
+        }
+
+        private void textBoxTargetTimezoneSearch_TextChanged(object sender, EventArgs e)
+        {
+            if (_isUpdatingTargetCombo)
+            {
+                return;
+            }
+
+            FilterTargetTimeZones(textBoxTargetTimezoneSearch.Text);
+        }
+
+        private void FilterTargetTimeZones(string searchText)
+        {
+            var selectedItem = comboBoxTargetTimezone.SelectedItem as TimezoneDisplayItem;
+            var filtered = string.IsNullOrWhiteSpace(searchText)
+                ? new List<TimezoneDisplayItem>(_allTargetTimezones)
+                : _allTargetTimezones
+                    .Where(item => item.DisplayText.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0
+                        || item.Timezone.Id.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0
+                        || item.Timezone.DisplayName.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0)
+                    .ToList();
+
+            _isUpdatingTargetCombo = true;
+            try
+            {
+                comboBoxTargetTimezone.BeginUpdate();
+                comboBoxTargetTimezone.Items.Clear();
+                comboBoxTargetTimezone.Items.AddRange(filtered.ToArray());
+                comboBoxTargetTimezone.EndUpdate();
+
+                if (selectedItem != null && filtered.Any(item => item.Timezone.Id == selectedItem.Timezone.Id))
+                {
+                    comboBoxTargetTimezone.SelectedItem = filtered.First(item => item.Timezone.Id == selectedItem.Timezone.Id);
+                }
+                else
+                {
+                    comboBoxTargetTimezone.SelectedIndex = -1;
+                }
+            }
+            finally
+            {
+                _isUpdatingTargetCombo = false;
+            }
+
+            if (filtered.Count > 0)
+            {
+                comboBoxTargetTimezone.DroppedDown = true;
+            }
+        }
+
+        private TimezoneDisplayItem FindTargetItemByText(string text)
+        {
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                return null;
+            }
+
+            string normalized = text.Trim();
+            return _allTargetTimezones.FirstOrDefault(item =>
+                string.Equals(item.DisplayText, normalized, StringComparison.OrdinalIgnoreCase)
+                || string.Equals(item.Timezone.Id, normalized, StringComparison.OrdinalIgnoreCase)
+                || string.Equals(item.Timezone.DisplayName, normalized, StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>

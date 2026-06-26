@@ -31,6 +31,8 @@
         private System.Windows.Forms.ComboBox comboBoxSourceTimezone;
         private System.Windows.Forms.Label labelTargetTimezone;
         private System.Windows.Forms.ComboBox comboBoxTargetTimezone;
+        private System.Windows.Forms.TextBox textBoxTargetTimezoneSearch;
+        private System.Windows.Forms.Label labelTargetSearch;
         private System.Windows.Forms.Label labelDateLegend;
         private System.Windows.Forms.DateTimePicker dateTimePickerDate;
         private System.Windows.Forms.Label labelTimeLegend;
@@ -48,6 +50,8 @@
             this.labelSourceTimezone = new System.Windows.Forms.Label();
             this.comboBoxSourceTimezone = new System.Windows.Forms.ComboBox();
             this.labelTargetTimezone = new System.Windows.Forms.Label();
+            this.labelTargetSearch = new System.Windows.Forms.Label();
+            this.textBoxTargetTimezoneSearch = new System.Windows.Forms.TextBox();
             this.comboBoxTargetTimezone = new System.Windows.Forms.ComboBox();
             this.labelDateLegend = new System.Windows.Forms.Label();
             this.dateTimePickerDate = new System.Windows.Forms.DateTimePicker();
@@ -64,19 +68,19 @@
             // labelHeader
             // 
             this.labelHeader.AutoSize = true;
-            this.labelHeader.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.labelHeader.Location = new System.Drawing.Point(26, 22);
+            this.labelHeader.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.labelHeader.Location = new System.Drawing.Point(22, 19);
             this.labelHeader.Name = "labelHeader";
-            this.labelHeader.Size = new System.Drawing.Size(310, 21);
+            this.labelHeader.Size = new System.Drawing.Size(360, 21);
             this.labelHeader.TabIndex = 0;
             this.labelHeader.Text = "Convert a time from one time zone to another";
             // 
             // labelSourceTimezone
             // 
             this.labelSourceTimezone.AutoSize = true;
-            this.labelSourceTimezone.Location = new System.Drawing.Point(26, 70);
+            this.labelSourceTimezone.Location = new System.Drawing.Point(22, 61);
             this.labelSourceTimezone.Name = "labelSourceTimezone";
-            this.labelSourceTimezone.Size = new System.Drawing.Size(79, 15);
+            this.labelSourceTimezone.Size = new System.Drawing.Size(77, 13);
             this.labelSourceTimezone.TabIndex = 1;
             this.labelSourceTimezone.Text = "Your timezone:";
             // 
@@ -84,68 +88,84 @@
             // 
             this.comboBoxSourceTimezone.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxSourceTimezone.FormattingEnabled = true;
-            this.comboBoxSourceTimezone.Location = new System.Drawing.Point(150, 67);
+            this.comboBoxSourceTimezone.Location = new System.Drawing.Point(129, 58);
             this.comboBoxSourceTimezone.Name = "comboBoxSourceTimezone";
-            this.comboBoxSourceTimezone.Size = new System.Drawing.Size(500, 23);
+            this.comboBoxSourceTimezone.Size = new System.Drawing.Size(429, 21);
             this.comboBoxSourceTimezone.TabIndex = 2;
             // 
             // labelTargetTimezone
             // 
             this.labelTargetTimezone.AutoSize = true;
-            this.labelTargetTimezone.Location = new System.Drawing.Point(26, 115);
+            this.labelTargetTimezone.Location = new System.Drawing.Point(22, 114);
             this.labelTargetTimezone.Name = "labelTargetTimezone";
-            this.labelTargetTimezone.Size = new System.Drawing.Size(74, 15);
+            this.labelTargetTimezone.Size = new System.Drawing.Size(59, 13);
             this.labelTargetTimezone.TabIndex = 3;
             this.labelTargetTimezone.Text = "Convert to:";
+            // 
+            // labelTargetSearch
+            // 
+            this.labelTargetSearch.AutoSize = true;
+            this.labelTargetSearch.Location = new System.Drawing.Point(22, 88);
+            this.labelTargetSearch.Name = "labelTargetSearch";
+            this.labelTargetSearch.Size = new System.Drawing.Size(94, 13);
+            this.labelTargetSearch.TabIndex = 4;
+            this.labelTargetSearch.Text = "Search timezones:";
+            // 
+            // textBoxTargetTimezoneSearch
+            // 
+            this.textBoxTargetTimezoneSearch.Location = new System.Drawing.Point(129, 85);
+            this.textBoxTargetTimezoneSearch.Name = "textBoxTargetTimezoneSearch";
+            this.textBoxTargetTimezoneSearch.Size = new System.Drawing.Size(429, 20);
+            this.textBoxTargetTimezoneSearch.TabIndex = 5;
+            this.textBoxTargetTimezoneSearch.TextChanged += new System.EventHandler(this.textBoxTargetTimezoneSearch_TextChanged);
             // 
             // comboBoxTargetTimezone
             // 
             this.comboBoxTargetTimezone.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxTargetTimezone.FormattingEnabled = true;
-            this.comboBoxTargetTimezone.Location = new System.Drawing.Point(150, 112);
+            this.comboBoxTargetTimezone.Location = new System.Drawing.Point(129, 111);
             this.comboBoxTargetTimezone.Name = "comboBoxTargetTimezone";
-            this.comboBoxTargetTimezone.Size = new System.Drawing.Size(500, 23);
-            this.comboBoxTargetTimezone.TabIndex = 4;
+            this.comboBoxTargetTimezone.Size = new System.Drawing.Size(429, 21);
+            this.comboBoxTargetTimezone.TabIndex = 6;
             // 
             // labelDateLegend
             // 
             this.labelDateLegend.AutoSize = true;
-            this.labelDateLegend.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.labelDateLegend.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.labelDateLegend.ForeColor = System.Drawing.Color.DarkBlue;
-            this.labelDateLegend.Location = new System.Drawing.Point(26, 160);
+            this.labelDateLegend.Location = new System.Drawing.Point(186, 166);
             this.labelDateLegend.Name = "labelDateLegend";
-            this.labelDateLegend.Size = new System.Drawing.Size(35, 15);
+            this.labelDateLegend.Size = new System.Drawing.Size(37, 15);
             this.labelDateLegend.TabIndex = 5;
             this.labelDateLegend.Text = "Date:";
             // 
             // dateTimePickerDate
             // 
             this.dateTimePickerDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePickerDate.Location = new System.Drawing.Point(70, 155);
+            this.dateTimePickerDate.Location = new System.Drawing.Point(229, 166);
             this.dateTimePickerDate.Name = "dateTimePickerDate";
-            this.dateTimePickerDate.Size = new System.Drawing.Size(120, 23);
+            this.dateTimePickerDate.Size = new System.Drawing.Size(103, 20);
             this.dateTimePickerDate.TabIndex = 6;
             // 
             // labelTimeLegend
             // 
             this.labelTimeLegend.AutoSize = true;
-            this.labelTimeLegend.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.labelTimeLegend.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.labelTimeLegend.ForeColor = System.Drawing.Color.DarkGreen;
-            this.labelTimeLegend.Location = new System.Drawing.Point(210, 160);
+            this.labelTimeLegend.Location = new System.Drawing.Point(185, 193);
             this.labelTimeLegend.Name = "labelTimeLegend";
-            this.labelTimeLegend.Size = new System.Drawing.Size(39, 15);
+            this.labelTimeLegend.Size = new System.Drawing.Size(38, 15);
             this.labelTimeLegend.TabIndex = 7;
             this.labelTimeLegend.Text = "Time:";
             // 
             // dateTimePickerTime
             // 
-            this.dateTimePickerTime.CustomFormat = "HH:mm";
+            this.dateTimePickerTime.CustomFormat = "hh:mm tt";
             this.dateTimePickerTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerTime.ShowUpDown = true;
-            this.dateTimePickerTime.Location = new System.Drawing.Point(255, 155);
+            this.dateTimePickerTime.Location = new System.Drawing.Point(229, 193);
             this.dateTimePickerTime.Name = "dateTimePickerTime";
             this.dateTimePickerTime.ShowUpDown = true;
-            this.dateTimePickerTime.Size = new System.Drawing.Size(80, 23);
+            this.dateTimePickerTime.Size = new System.Drawing.Size(103, 20);
             this.dateTimePickerTime.TabIndex = 8;
             // 
             // buttonRefreshDateTime
@@ -153,9 +173,9 @@
             this.buttonRefreshDateTime.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(215)))));
             this.buttonRefreshDateTime.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonRefreshDateTime.ForeColor = System.Drawing.Color.White;
-            this.buttonRefreshDateTime.Location = new System.Drawing.Point(355, 152);
+            this.buttonRefreshDateTime.Location = new System.Drawing.Point(338, 167);
             this.buttonRefreshDateTime.Name = "buttonRefreshDateTime";
-            this.buttonRefreshDateTime.Size = new System.Drawing.Size(120, 27);
+            this.buttonRefreshDateTime.Size = new System.Drawing.Size(103, 23);
             this.buttonRefreshDateTime.TabIndex = 9;
             this.buttonRefreshDateTime.Text = "Refresh now";
             this.buttonRefreshDateTime.UseVisualStyleBackColor = false;
@@ -164,9 +184,9 @@
             // checkBoxDaylightSavings
             // 
             this.checkBoxDaylightSavings.AutoSize = true;
-            this.checkBoxDaylightSavings.Location = new System.Drawing.Point(26, 200);
+            this.checkBoxDaylightSavings.Location = new System.Drawing.Point(229, 232);
             this.checkBoxDaylightSavings.Name = "checkBoxDaylightSavings";
-            this.checkBoxDaylightSavings.Size = new System.Drawing.Size(143, 19);
+            this.checkBoxDaylightSavings.Size = new System.Drawing.Size(131, 17);
             this.checkBoxDaylightSavings.TabIndex = 8;
             this.checkBoxDaylightSavings.Text = "Daylight savings apply";
             this.checkBoxDaylightSavings.UseVisualStyleBackColor = true;
@@ -176,9 +196,9 @@
             this.buttonConvertTime.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(215)))));
             this.buttonConvertTime.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonConvertTime.ForeColor = System.Drawing.Color.White;
-            this.buttonConvertTime.Location = new System.Drawing.Point(200, 245);
+            this.buttonConvertTime.Location = new System.Drawing.Point(166, 270);
             this.buttonConvertTime.Name = "buttonConvertTime";
-            this.buttonConvertTime.Size = new System.Drawing.Size(100, 32);
+            this.buttonConvertTime.Size = new System.Drawing.Size(86, 28);
             this.buttonConvertTime.TabIndex = 10;
             this.buttonConvertTime.Text = "Convert";
             this.buttonConvertTime.UseVisualStyleBackColor = false;
@@ -189,9 +209,9 @@
             this.buttonResetForm.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(117)))), ((int)(((byte)(125)))));
             this.buttonResetForm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonResetForm.ForeColor = System.Drawing.Color.White;
-            this.buttonResetForm.Location = new System.Drawing.Point(310, 245);
+            this.buttonResetForm.Location = new System.Drawing.Point(261, 270);
             this.buttonResetForm.Name = "buttonResetForm";
-            this.buttonResetForm.Size = new System.Drawing.Size(100, 32);
+            this.buttonResetForm.Size = new System.Drawing.Size(86, 28);
             this.buttonResetForm.TabIndex = 11;
             this.buttonResetForm.Text = "Reset";
             this.buttonResetForm.UseVisualStyleBackColor = false;
@@ -202,9 +222,9 @@
             this.buttonExitApp.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(53)))), ((int)(((byte)(69)))));
             this.buttonExitApp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonExitApp.ForeColor = System.Drawing.Color.White;
-            this.buttonExitApp.Location = new System.Drawing.Point(420, 245);
+            this.buttonExitApp.Location = new System.Drawing.Point(355, 270);
             this.buttonExitApp.Name = "buttonExitApp";
-            this.buttonExitApp.Size = new System.Drawing.Size(100, 32);
+            this.buttonExitApp.Size = new System.Drawing.Size(86, 28);
             this.buttonExitApp.TabIndex = 12;
             this.buttonExitApp.Text = "Exit";
             this.buttonExitApp.UseVisualStyleBackColor = false;
@@ -212,24 +232,24 @@
             // 
             // labelConversionResult
             // 
-            this.labelConversionResult.AutoSize = false;
-            this.labelConversionResult.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.labelConversionResult.Location = new System.Drawing.Point(20, 295);
+            this.labelConversionResult.BackColor = System.Drawing.Color.White;
+            this.labelConversionResult.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.labelConversionResult.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.labelConversionResult.Location = new System.Drawing.Point(12, 324);
             this.labelConversionResult.Name = "labelConversionResult";
-            this.labelConversionResult.Size = new System.Drawing.Size(680, 50);
+            this.labelConversionResult.Padding = new System.Windows.Forms.Padding(5);
+            this.labelConversionResult.Size = new System.Drawing.Size(593, 104);
             this.labelConversionResult.TabIndex = 13;
             this.labelConversionResult.Text = "Result will appear here.";
-            this.labelConversionResult.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.labelConversionResult.Padding = new System.Windows.Forms.Padding(6);
-            this.labelConversionResult.BackColor = System.Drawing.Color.White;
             this.labelConversionResult.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // TimeConverterForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(720, 365);
+            this.ClientSize = new System.Drawing.Size(617, 437);
+            this.ControlBox = false;
             this.Controls.Add(this.labelConversionResult);
             this.Controls.Add(this.buttonExitApp);
             this.Controls.Add(this.buttonResetForm);
@@ -241,12 +261,13 @@
             this.Controls.Add(this.dateTimePickerDate);
             this.Controls.Add(this.labelDateLegend);
             this.Controls.Add(this.comboBoxTargetTimezone);
+            this.Controls.Add(this.textBoxTargetTimezoneSearch);
+            this.Controls.Add(this.labelTargetSearch);
             this.Controls.Add(this.labelTargetTimezone);
             this.Controls.Add(this.comboBoxSourceTimezone);
             this.Controls.Add(this.labelSourceTimezone);
             this.Controls.Add(this.labelHeader);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.ControlBox = false;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "TimeConverterForm";
